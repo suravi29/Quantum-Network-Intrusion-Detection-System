@@ -3,6 +3,7 @@ from preprocessing.attack_mapping import map_attack
 from preprocessing.encoder import encode_features
 from preprocessing.prepare_data import prepare_features_and_labels
 from preprocessing.scaler import scale_features
+from preprocessing.split_data import split_dataset
 
 # Load dataset
 train_data = load_dataset("dataset/KDDTrain+.txt")
@@ -25,6 +26,24 @@ X, y, category_encoder = prepare_features_and_labels(train_data)
 
 # Scale features
 X_scaled, scaler = scale_features(X)
+
+# Split dataset
+X_train, X_test, y_train, y_test = split_dataset(
+    X_scaled,
+    y
+)
+
+print("\nTraining set shape:")
+print(X_train.shape)
+
+print("\nTesting set shape:")
+print(X_test.shape)
+
+print("\nTraining labels:")
+print(y_train.shape)
+
+print("\nTesting labels:")
+print(y_test.shape)
 
 print("\nScaled feature matrix shape:")
 print(X_scaled.shape)
