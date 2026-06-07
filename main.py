@@ -5,7 +5,8 @@ from preprocessing.prepare_data import prepare_features_and_labels
 from preprocessing.scaler import scale_features
 from preprocessing.split_data import split_dataset
 from preprocessing.feature_reduction import reduce_features
-
+from models.classical_svm import train_classical_svm
+from sklearn.model_selection import train_test_split
 # Load dataset
 train_data = load_dataset("dataset/KDDTrain+.txt")
 
@@ -43,6 +44,32 @@ X_train, X_test, y_train, y_test = split_dataset(
     X_train,
     X_test,
     n_components=8
+)
+
+# Create smaller dataset for quick experimentation
+
+X_train_small, _, y_train_small, _ = train_test_split(
+    X_train_reduced,
+    y_train,
+    train_size=10000,
+    random_state=42,
+    stratify=y_train
+)
+
+X_test_small, _, y_test_small, _ = train_test_split(
+    X_test_reduced,
+    y_test,
+    train_size=2000,
+    random_state=42,
+    stratify=y_test
+)
+
+# Train Classical SVM
+svm_model, predictions = train_classical_svm(
+    X_train_small,
+    y_train_small,
+    X_test_small,
+    y_test_small
 )
 
 print("\nReduced Training Shape:")

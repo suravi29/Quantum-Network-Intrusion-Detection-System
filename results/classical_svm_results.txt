@@ -1,0 +1,10 @@
+Accuracy: 96.75%
+
+Classes:
+DoS
+Normal
+Probe
+R2L
+U2R
+
+R2L and U2R showed poor detection due to class imbalance.
