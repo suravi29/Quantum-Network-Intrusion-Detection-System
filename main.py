@@ -1,9 +1,7 @@
-import pandas as pd
+from preprocessing.data_loader import load_dataset
 
-train_data = pd.read_csv(
-    "dataset/KDDTrain+.txt",
-    header=None
-)
+# Load training dataset
+train_data = load_dataset("dataset/KDDTrain+.txt")
 
 print(train_data.head())
-print(train_data.shape)
+print("\nShape:", train_data.shape)
