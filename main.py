@@ -4,6 +4,7 @@ from preprocessing.encoder import encode_features
 from preprocessing.prepare_data import prepare_features_and_labels
 from preprocessing.scaler import scale_features
 from preprocessing.split_data import split_dataset
+from preprocessing.feature_reduction import reduce_features
 
 # Load dataset
 train_data = load_dataset("dataset/KDDTrain+.txt")
@@ -31,6 +32,32 @@ X_scaled, scaler = scale_features(X)
 X_train, X_test, y_train, y_test = split_dataset(
     X_scaled,
     y
+)
+
+# Reduce features using PCA
+(
+    X_train_reduced,
+    X_test_reduced,
+    pca
+) = reduce_features(
+    X_train,
+    X_test,
+    n_components=8
+)
+
+print("\nReduced Training Shape:")
+print(X_train_reduced.shape)
+
+print("\nReduced Testing Shape:")
+print(X_test_reduced.shape)
+
+print("\nExplained Variance:")
+print(
+    round(
+        pca.explained_variance_ratio_.sum() * 100,
+        2
+    ),
+    "%"
 )
 
 print("\nTraining set shape:")
